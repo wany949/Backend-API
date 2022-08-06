@@ -22,7 +22,7 @@ public class CharacterController : ControllerBase
         _httpClient = clientFactory.CreateClient("genshin");
     }
 
-    // GET actions
+    // GET from httpClient and store into CharacterService
     [HttpGet]
     [Route("raw")]
     [ProducesResponseType(200)]
@@ -39,12 +39,12 @@ public class CharacterController : ControllerBase
             content = await res.Content.ReadAsStringAsync();
             Character character = JsonSerializer.Deserialize<Character>(content);
             characters.Add(character);
+            CharacterService.Add(character);
         }
         return Ok(characters);
     }
 
-
-
+    // GET actions
     [HttpGet]
     public ActionResult<List<Character>> GetAll() =>
         CharacterService.GetAll();
