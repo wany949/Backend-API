@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Text.Json;
 using BackendAPI.Models;
 using BackendAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +30,17 @@ public class CharacterController : ControllerBase
     {
         var res = await _httpClient.GetAsync("characters");
         var content = await res.Content.ReadAsStringAsync();
-        return Ok(content);
+        string[] charList = JsonSerializer.Deserialize<string[]>(content);
+        List<Character> characters = new List<Character>(); 
+
+        foreach (string name in charList)
+        {
+            res = await _httpClient.GetAsync("characters/" + name);
+            content = await res.Content.ReadAsStringAsync();
+            Character character = JsonSerializer.Deserialize<Character>(content);
+            characters.Add(character);
+        }
+        return Ok(characters);
     }
 
 
