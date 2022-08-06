@@ -10,12 +10,29 @@ namespace BackendAPI.Controllers;
 [Route("[controller]")]
 public class CharacterController : ControllerBase
 {
-	public CharacterController()
+    private readonly HttpClient _httpClient;
+	public CharacterController(IHttpClientFactory clientFactory)
     {
-
+        if (clientFactory is null)
+        {
+            throw new ArgumentNullException(nameof(clientFactory));
+        }
+        _httpClient = clientFactory.CreateClient("genshin");
     }
 
     // GET actions
+    [HttpGet]
+    [Route("raw")]
+    [ProducesResponseType(200)]
+    public async Task<IActionResult> GetGenshinCharacters()
+    {
+        var res = await _httpClient.GetAsync("characters");
+        var content = await res.Content.ReadAsStringAsync();
+        return Ok(content);
+    }
+
+
+
     [HttpGet]
     public ActionResult<List<Character>> GetAll() =>
         CharacterService.GetAll();
