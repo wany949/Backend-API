@@ -13,16 +13,16 @@ public static class CharacterService
 
     public static List<Character> GetAll() => Characters;
 
-    public static Character? Get(string Name) => Characters.FirstOrDefault(c => c.Name == Name);
+    public static Character? Get(string name) => Characters.FirstOrDefault(c => c.Name == name);
 
     public static void Add(Character character)
     {
         Characters.Add(character);
     }
 
-    public static void Delete(string Name)
+    public static void Delete(string name)
     {
-        var character = Get(Name);
+        var character = Get(name);
         if (character is null) 
             return;
 
