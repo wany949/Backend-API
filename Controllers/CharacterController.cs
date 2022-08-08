@@ -16,21 +16,21 @@ public class CharacterController : ControllerBase
 {
     private readonly HttpClient _httpClient;
     private readonly ICharacterService _service;
-	public CharacterController(IHttpClientFactory clientFactory)
+	public CharacterController(IHttpClientFactory clientFactory, ICharacterService service)
     {
         if (clientFactory is null)
         {
             throw new ArgumentNullException(nameof(clientFactory));
         }
+        if (service is null)
+        {
+            throw new ArgumentNullException(nameof(service));
+        }
+        _service = service;
         _httpClient = clientFactory.CreateClient("genshin");
     }
 
-    public CharacterController(ICharacterService service)
-    {
-        _service = service;
-    }
-
-    // GET from httpClient and store into CharacterService
+    // GET from httpClient and store into database
     [HttpGet]
     [Route("raw")]
     [ProducesResponseType(200)]
@@ -39,7 +39,7 @@ public class CharacterController : ControllerBase
         var res = await _httpClient.GetAsync("characters");
         var content = await res.Content.ReadAsStringAsync();
         string[] charList = JsonSerializer.Deserialize<string[]>(content);
-        List<Character> characters = new List<Character>(); 
+        List<Character> characters = new(); 
 
         foreach (string name in charList)
         {

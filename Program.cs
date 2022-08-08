@@ -29,7 +29,7 @@ builder.Services.AddHttpClient("genshin", configureClient: client =>
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddDbContext<CharacterDb>(options => options.UseInMemoryDatabase("characters"));
+    builder.Services.AddDbContext<CharacterDb>(options => options.UseInMemoryDatabase("Characters"));
 } else if (builder.Environment.IsProduction())
 {
     builder.Services.AddDbContext<CharacterDb>(options => options.UseSqlite(builder.Configuration["GenshinAPIConnection"]));
@@ -43,7 +43,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Character API V1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Character API Development");
+    });
+} else if (app.Environment.IsProduction())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Character API Production");
     });
 }
 
