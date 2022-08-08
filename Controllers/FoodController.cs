@@ -32,14 +32,19 @@ public class FoodController : ControllerBase
 
     protected string ReturnHTML(List<Food> meal)
     {
-
+        var baseURL = "https://api.genshin.dev/consumables/food/";
         var html = System.IO.File.ReadAllText(@"./assets/index.html");
+
         for (int i = 0; i < meal.Count; i++)
         {
-            int temp = i + 1;
             Food food = _service.GetFoodByName(meal[i].Name);
+            int temp = i + 1;
+            string tempName = food.Name.Replace("é", "e").Replace(",", "").Replace("&", "")
+                .Replace("'", "").Replace("  ", "-").Replace(" ", "-").ToLower();
+
             html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
-                .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString());
+                .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString())
+                .Replace("{{imgsrc" + temp + "}}", baseURL + tempName);
         }
         return html;
     }
