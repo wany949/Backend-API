@@ -30,6 +30,20 @@ public class FoodController : ControllerBase
         _httpClient = clientFactory.CreateClient("genshin");
     }
 
+    protected string ReturnHTML(List<Food> meal)
+    {
+
+        var html = System.IO.File.ReadAllText(@"./assets/index.html");
+        for (int i = 0; i < meal.Count; i++)
+        {
+            int temp = i + 1;
+            Food food = _service.GetFoodByName(meal[i].Name);
+            html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
+                .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString());
+        }
+        return html;
+    }
+
     // GET from httpClient and store into database
     [HttpGet]
     [Route("raw")]
@@ -58,8 +72,10 @@ public class FoodController : ControllerBase
     public ActionResult<List<Food>> Get3CourseMeal()
     {
         List<Food> meal = _service.Get3CourseMeal();
-        return Ok(meal);
+        var html = ReturnHTML(meal);
+        return base.Content(html, "text/html");
     }
+
 
     [HttpGet]
     public ActionResult<IEnumerable<Food>> GetAll()
@@ -71,7 +87,7 @@ public class FoodController : ControllerBase
     [HttpGet("{name}")]
     public ActionResult<Food> Get(string name)
     {
-        var food = _service.GetFoodByName(name);
+        Food food = _service.GetFoodByName(name);
 
         if (food == null)
             return NotFound();
@@ -105,7 +121,7 @@ public class FoodController : ControllerBase
     [HttpDelete("{name}")]
     public IActionResult Delete(string name)
     {
-        var food = _service.GetFoodByName(name);
+        Food food = _service.GetFoodByName(name);
 
         if (food is null)
             return NotFound();
