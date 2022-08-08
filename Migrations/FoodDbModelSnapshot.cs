@@ -3,45 +3,40 @@ using System;
 using BackendAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Backend_API.Migrations
 {
-    [DbContext(typeof(CharacterDb))]
-    [Migration("20220807092231_InitialCreate")]
-    partial class InitialCreate
+    [DbContext(typeof(FoodDb))]
+    partial class FoodDbModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.7");
 
-            modelBuilder.Entity("BackendAPI.Models.Character", b =>
+            modelBuilder.Entity("BackendAPI.Models.Food", b =>
                 {
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Birthday")
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Constellation")
+                    b.Property<string>("Effect")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("Rarity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Vision")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Weapon")
+                    b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Name");
 
-                    b.ToTable("Characters");
+                    b.ToTable("FoodList");
                 });
 #pragma warning restore 612, 618
         }

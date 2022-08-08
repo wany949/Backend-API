@@ -9,26 +9,25 @@ namespace Backend_API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Characters",
+                name: "FoodList",
                 columns: table => new
                 {
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Vision = table.Column<string>(type: "TEXT", nullable: true),
-                    Weapon = table.Column<string>(type: "TEXT", nullable: true),
-                    Constellation = table.Column<string>(type: "TEXT", nullable: true),
-                    Birthday = table.Column<string>(type: "TEXT", nullable: true),
+                    Type = table.Column<string>(type: "TEXT", nullable: true),
+                    Effect = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true),
                     Rarity = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Characters", x => x.Name);
+                    table.PrimaryKey("PK_FoodList", x => x.Name);
                 });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Characters");
+                name: "FoodList");
         }
     }
 }

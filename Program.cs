@@ -15,12 +15,12 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "Genshin Character API",
+        Title = "Genshin Food API",
         Version = "v1"
     });
 });
 
-builder.Services.AddScoped<ICharacterService, CharacterService>();
+builder.Services.AddScoped<IFoodService, FoodService>();
 
 builder.Services.AddHttpClient("genshin", configureClient: client =>
 {
@@ -29,10 +29,10 @@ builder.Services.AddHttpClient("genshin", configureClient: client =>
 
 if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddDbContext<CharacterDb>(options => options.UseInMemoryDatabase("Characters"));
+    builder.Services.AddDbContext<FoodDb>(options => options.UseInMemoryDatabase("FoodList"));
 } else if (builder.Environment.IsProduction())
 {
-    builder.Services.AddDbContext<CharacterDb>(options => options.UseSqlite(builder.Configuration["GenshinAPIConnection"]));
+    builder.Services.AddDbContext<FoodDb>(options => options.UseSqlite(builder.Configuration["GenshinAPIConnection"]));
 }
 
 var app = builder.Build();
@@ -43,14 +43,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Character API Development");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Food API Development");
     });
 } else if (app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Character API Production");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Genshin Food API Production");
     });
 }
 

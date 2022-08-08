@@ -3,47 +3,42 @@ using System;
 using BackendAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
 namespace Backend_API.Migrations
 {
-    [DbContext(typeof(CharacterDb))]
-    partial class CharacterDbModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FoodDb))]
+    [Migration("20220808053655_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.7");
 
-            modelBuilder.Entity("BackendAPI.Models.Character", b =>
+            modelBuilder.Entity("BackendAPI.Models.Food", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Birthday")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Constellation")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Effect")
                         .HasColumnType("TEXT");
 
                     b.Property<int?>("Rarity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Vision")
+                    b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Weapon")
-                        .HasColumnType("TEXT");
+                    b.HasKey("Name");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Characters");
+                    b.ToTable("FoodList");
                 });
 #pragma warning restore 612, 618
         }
