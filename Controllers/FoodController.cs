@@ -40,18 +40,27 @@ public class FoodController : ControllerBase
         var res = await _httpClient.GetAsync("/consumables/food");
         var content = await res.Content.ReadAsStringAsync();
         JObject foodListResponse = JsonConvert.DeserializeObject<JObject>(content);
+        
         foreach (KeyValuePair<string, JToken> property in foodListResponse)
         {
             Food food = JsonConvert.DeserializeObject<Food>(property.Value.ToString());
-
             foodList.Add(food);
             _service.AddFood(food);
-
         }
+        
         return Ok(foodList);
     }
 
     // GET actions
+    [HttpGet]
+    [Route("meal")]
+    [ProducesResponseType(200)]
+    public ActionResult<List<Food>> Get3CourseMeal()
+    {
+        List<Food> meal = _service.Get3CourseMeal();
+        return Ok(meal);
+    }
+
     [HttpGet]
     public ActionResult<IEnumerable<Food>> GetAll()
     {

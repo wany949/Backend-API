@@ -25,6 +25,25 @@ namespace BackendAPI.Data
             return food;
         }
 
+        public List<Food> Get3CourseMeal()
+        {
+            List<Food> meal = new();
+
+            if (dbFood.FoodList.Count() != 0)
+            {
+                int totalFoodCount = dbFood.FoodList.Count();
+                Random random = new();
+                for (int i = 0; i < 3; i++)
+                {
+                    int randomInRange = random.Next(0, totalFoodCount);
+                    Food f = dbFood.FoodList.Skip(randomInRange).Take(1).First();
+                    meal.Add(f);
+                }
+            }
+
+            return meal;
+        }
+
         public void AddFood(Food food)
         {
             Food existingFood = dbFood.FoodList.FirstOrDefault(f => f.Name == food.Name);
