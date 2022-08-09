@@ -30,6 +30,23 @@ public class FoodController : ControllerBase
         _httpClient = clientFactory.CreateClient("genshin");
     }
 
+    protected string replaceName(string name)
+    {
+        string foodName = name.Replace("é", "e").Replace(",", "").Replace("&", "")
+                .Replace("'", "").Replace("  ", "-").Replace(" ", "-").ToLower();
+
+        return foodName;
+    }
+
+    protected string replaceHTML(string html, int temp, string baseURL, string name, Food food)
+    {
+        html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
+                .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString())
+                .Replace("{{imgsrc" + temp + "}}", baseURL + name);
+
+        return html;
+    }
+
     protected string ReturnHTML(List<Food> meal)
     {
         var baseURL = "https://api.genshin.dev/consumables/food/";
@@ -39,12 +56,8 @@ public class FoodController : ControllerBase
         {
             Food food = _service.GetFoodByName(meal[i].Name);
             int temp = i + 1;
-            string tempName = food.Name.Replace("é", "e").Replace(",", "").Replace("&", "")
-                .Replace("'", "").Replace("  ", "-").Replace(" ", "-").ToLower();
-
-            html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
-                .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString())
-                .Replace("{{imgsrc" + temp + "}}", baseURL + tempName);
+            string foodName = replaceName(food.Name);
+            html = replaceHTML(html, temp, baseURL, foodName, food);
         }
         return html;
     }
@@ -59,14 +72,14 @@ public class FoodController : ControllerBase
         var res = await _httpClient.GetAsync("/consumables/food");
         var content = await res.Content.ReadAsStringAsync();
         JObject foodListResponse = JsonConvert.DeserializeObject<JObject>(content);
-        
+
         foreach (KeyValuePair<string, JToken> property in foodListResponse)
         {
             Food food = JsonConvert.DeserializeObject<Food>(property.Value.ToString());
             foodList.Add(food);
             _service.AddFood(food);
         }
-        
+
         return Ok(foodList);
     }
 

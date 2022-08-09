@@ -6,22 +6,22 @@ namespace BackendAPI.Data
 {
     public class FoodService : IFoodService
     {
-        private readonly FoodDb dbFood;
+        private readonly FoodDb _dbFood;
 
-        public FoodService(FoodDb dbChar)
+        public FoodService(FoodDb dbFood)
         {
-            dbFood = dbChar;
+            _dbFood = dbFood;
         }
 
         public IEnumerable<Food> GetAllFood()
         {
-            IEnumerable<Food> food = dbFood.FoodList.ToList<Food>();
+            IEnumerable<Food> food = _dbFood.FoodList.ToList<Food>();
             return food;
         }
 
         public Food GetFoodByName(string name)
         {
-            Food food = dbFood.FoodList.FirstOrDefault(f => f.Name == name);
+            Food food = _dbFood.FoodList.FirstOrDefault(f => f.Name == name);
             return food;
         }
 
@@ -29,14 +29,14 @@ namespace BackendAPI.Data
         {
             List<Food> meal = new();
 
-            if (dbFood.FoodList.Count() != 0)
+            if (_dbFood.FoodList.Count() != 0)
             {
-                int totalFoodCount = dbFood.FoodList.Count();
+                int totalFoodCount = _dbFood.FoodList.Count();
                 Random random = new();
                 for (int i = 0; i < 3; i++)
                 {
                     int randomInRange = random.Next(0, totalFoodCount);
-                    Food f = dbFood.FoodList.Skip(randomInRange).Take(1).First();
+                    Food f = _dbFood.FoodList.Skip(randomInRange).Take(1).First();
                     meal.Add(f);
                 }
             }
@@ -46,32 +46,32 @@ namespace BackendAPI.Data
 
         public void AddFood(Food food)
         {
-            Food existingFood = dbFood.FoodList.FirstOrDefault(f => f.Name == food.Name);
+            Food existingFood = _dbFood.FoodList.FirstOrDefault(f => f.Name == food.Name);
 
             if (existingFood is null)
             {
-                dbFood.FoodList.Add(food);
+                _dbFood.FoodList.Add(food);
             }
             
-            dbFood.SaveChanges();
+            _dbFood.SaveChanges();
         }
 
         public void RemoveFood(Food food)
         {
-            Food existingFood = dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
+            Food existingFood = _dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
             if (existingFood != null)
             {
-                dbFood.Remove(existingFood);
-                dbFood.SaveChanges();
+                _dbFood.Remove(existingFood);
+                _dbFood.SaveChanges();
             }
         }
 
         public void UpdateFood(Food food)
         {
-            Food existingFood = dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
+            Food existingFood = _dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
             if (existingFood != null)
             {
-                dbFood.Update(existingFood);
+                _dbFood.Update(existingFood);
             }
         }
     }
