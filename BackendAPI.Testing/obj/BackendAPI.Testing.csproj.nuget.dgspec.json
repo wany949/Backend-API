@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI.Testing\\BackendAPI.Testing.csproj": {}
+    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI.Testing\\BackendAPI.Testing.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI.Testing\\BackendAPI.Testing.csproj": {
+    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI.Testing\\BackendAPI.Testing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI.Testing\\BackendAPI.Testing.csproj",
+        "projectUniqueName": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI.Testing\\BackendAPI.Testing.csproj",
         "projectName": "BackendAPI.Testing",
-        "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI.Testing\\BackendAPI.Testing.csproj",
+        "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI.Testing\\BackendAPI.Testing.csproj",
         "packagesPath": "C:\\Users\\Yvonne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI.Testing\\obj\\",
+        "outputPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI.Testing\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Yvonne\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\BackendAPI.csproj": {
-                "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\BackendAPI.csproj"
+              "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\BackendAPI.csproj": {
+                "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\BackendAPI.csproj"
               }
             }
           }
@@ -88,14 +88,14 @@
         }
       }
     },
-    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\BackendAPI.csproj": {
+    "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\BackendAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\BackendAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\BackendAPI.csproj",
         "projectName": "BackendAPI",
-        "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\BackendAPI.csproj",
+        "projectPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\BackendAPI.csproj",
         "packagesPath": "C:\\Users\\Yvonne\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\BackendAPI\\obj\\",
+        "outputPath": "C:\\Users\\Yvonne\\Documents\\MSA\\P2\\Backend\\BackendAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Yvonne\\AppData\\Roaming\\NuGet\\NuGet.Config",
