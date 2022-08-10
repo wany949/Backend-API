@@ -50,7 +50,7 @@ namespace BackendAPI.Testing
                 ActionResult<IEnumerable<Food>> expectedFoodList = new List<Food> { food1, food2, food3, food4, food5, food6 };
 
                 ActionResult<IEnumerable<Food>> controllerFoodList = _foodController.GetAll();
-                Assert.That(expectedFoodList.ToString(), Is.EqualTo(controllerFoodList.ToString()));
+                Assert.That(expectedFoodList, Is.EqualTo(controllerFoodList));
 
             }
 
@@ -59,6 +59,26 @@ namespace BackendAPI.Testing
             {
                 ActionResult<Food> expectedFood = new Food() { Name = "Pork Bao", Description = "Steaming pork bao", Effect = "Boosts CRIT by 150", Rarity = 4, Type = "Boosts CRIT" };
                 ActionResult<Food> controllerFood = _foodController.Get("Pork bao");
+                Assert.That(expectedFood.ToString(), Is.EqualTo(controllerFood.ToString()));
+            }
+
+            [Test(Description = "Checking special diacritics and spaces / hyphens are replaced correctly")]
+            [TestCase("Adventurer's Breakfast Sandwich", ExpectedResult="adventurers-breakfast-sandwich")]
+            [TestCase("Berry & Mint Burst", ExpectedResult = "berry-mint-burst")]
+            [TestCase("Sautéed Matsutake", ExpectedResult = "sauteed-matsutake")]
+            [TestCase("Lantern Rite Special Triple-Layered Consommé", ExpectedResult = "lantern-rite-special-triple-layered-consomme")]
+            public string TestReplace(string name)
+            {
+                return _foodController.replaceName(name);
+            }
+
+            [Test]
+            public void TestPost()
+            {
+                Food expectedFood = new Food() { Name = "Rice", Description = "Steamy rice", Effect = "Boosts DEF by 10", Rarity = 1, Type = "Boosts DEF" };
+                _foodController.Create(expectedFood);
+
+                ActionResult<Food> controllerFood = _foodController.Get("Rice");
                 Assert.That(expectedFood.ToString(), Is.EqualTo(controllerFood.ToString()));
             }
         }

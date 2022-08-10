@@ -30,15 +30,17 @@ public class FoodController : ControllerBase
         _httpClient = clientFactory.CreateClient("genshin");
     }
 
-    protected string replaceName(string name)
+    [NonAction]
+    public string replaceName(string name)
     {
         string foodName = name.Replace("é", "e").Replace(",", "").Replace("&", "")
                 .Replace("'", "").Replace("  ", "-").Replace(" ", "-").ToLower();
 
         return foodName;
     }
-
-    protected string replaceHTML(string html, int temp, string baseURL, string name, Food food)
+    
+    [NonAction]
+    public string replaceHTML(string html, int temp, string baseURL, string name, Food food)
     {
         html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
                 .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString())
@@ -46,8 +48,9 @@ public class FoodController : ControllerBase
 
         return html;
     }
-
-    protected string ReturnHTML(List<Food> meal)
+    
+    [NonAction]
+    public string ReturnHTML(List<Food> meal)
     {
         var baseURL = "https://api.genshin.dev/consumables/food/";
         var html = System.IO.File.ReadAllText(@"./assets/index.html");
