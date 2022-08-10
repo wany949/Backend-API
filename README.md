@@ -1,10 +1,11 @@
 # Overall Idea
 This API will call the Genshin API for recipes and food objects that exist in the Genshin Universe, and will return back to the user a random 3 course meal.
 
-To get the HTML page containing the 3 course meal, please launch in production environment or profile and use the link 
+If this is the first time opening this project, please load in the database using *get raw* in Swagger.
+To get the HTML page containing the 3 course meal, please launch in production environment or profile and use the link. Production allows it so that you would only have to load in the database once.
 ```https://localhost:{your_port_number}/Food/get_meal_HTML```
 
-If launched in development environment this is still possible, however you would have to load in all the food first using the *get raw* in Swagger before trying to make a 3 course meal.
+If launched in development environment, everytime you launched, you would have to load in all the food first using the *get raw* in Swagger before trying to make a 3 course meal as data does not persist.
 
 ![image](https://user-images.githubusercontent.com/79778710/183880997-b84107d4-c8c8-4f19-a310-be6b0944eb13.png)
 
