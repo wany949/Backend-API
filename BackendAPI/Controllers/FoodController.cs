@@ -31,7 +31,7 @@ public class FoodController : ControllerBase
     }
 
     [NonAction]
-    public string replaceName(string name)
+    public string ReplaceName(string name)
     {
         string foodName = name.Replace("é", "e").Replace(",", "").Replace("&", "")
                 .Replace("'", "").Replace("  ", "-").Replace(" ", "-").ToLower();
@@ -40,7 +40,7 @@ public class FoodController : ControllerBase
     }
     
     [NonAction]
-    public string replaceHTML(string html, int temp, string baseURL, string name, Food food)
+    public string ReplaceHTML(string html, int temp, string baseURL, string name, Food food)
     {
         html = html.Replace("{{name" + temp + "}}", food.Name).Replace("{{type" + temp + "}}", food.Type).Replace("{{effect" + temp + "}}", food.Effect)
                 .Replace("{{description" + temp + "}}", food.Description).Replace("{{rarity" + temp + "}}", food.Rarity.ToString())
@@ -59,8 +59,8 @@ public class FoodController : ControllerBase
         {
             Food food = _service.GetFoodByName(meal[i].Name);
             int temp = i + 1;
-            string foodName = replaceName(food.Name);
-            html = replaceHTML(html, temp, baseURL, foodName, food);
+            string foodName = ReplaceName(food.Name);
+            html = ReplaceHTML(html, temp, baseURL, foodName, food);
         }
         return html;
     }
@@ -88,21 +88,30 @@ public class FoodController : ControllerBase
 
     // GET actions
     [HttpGet]
-    [Route("meal")]
+    [Route("get_meal")]
     [ProducesResponseType(200)]
-    public ActionResult<List<Food>> Get3CourseMeal()
+    public List<Food> Get3CourseMeal()
     {
         List<Food> meal = _service.Get3CourseMeal();
+        return meal;
+    }
+
+    [HttpGet]
+    [Route("get_meal_HTML")]
+    [ProducesResponseType(200)]
+    public ActionResult GetHTML()
+    {
+        List<Food> meal = Get3CourseMeal();
         var html = ReturnHTML(meal);
         return base.Content(html, "text/html");
     }
 
 
     [HttpGet]
-    public ActionResult<IEnumerable<Food>> GetAll()
+    public IEnumerable<Food> GetAll()
     {
         IEnumerable<Food> food = _service.GetAllFood();
-        return Ok(food);
+        return food;
     }
 
     [HttpGet("{name}")]
@@ -135,6 +144,8 @@ public class FoodController : ControllerBase
         if (existingFood is null)
             return NotFound();
 
+        _service.UpdateFood(food);
+
         return NoContent();
     }
 
@@ -146,7 +157,7 @@ public class FoodController : ControllerBase
 
         if (food is null)
             return NotFound();
-
+        _service.RemoveFood(food);
 
         return NoContent();
     }

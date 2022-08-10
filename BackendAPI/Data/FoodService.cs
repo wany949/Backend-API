@@ -58,8 +58,8 @@ namespace BackendAPI.Data
 
         public void RemoveFood(Food food)
         {
-            Food existingFood = _dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
-            if (existingFood != null)
+            Food existingFood = _dbFood.FoodList.FirstOrDefault(f => f.Name == food.Name);
+            if (existingFood is not null)
             {
                 _dbFood.Remove(existingFood);
                 _dbFood.SaveChanges();
@@ -68,7 +68,7 @@ namespace BackendAPI.Data
 
         public void UpdateFood(Food food)
         {
-            Food existingFood = _dbFood.FoodList.FirstOrDefault(c => c.Name == food.Name);
+            Food existingFood = _dbFood.FoodList.FirstOrDefault(f => f.Name == food.Name);
             if (existingFood != null)
             {
                 _dbFood.Update(existingFood);
